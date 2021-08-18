@@ -9,6 +9,5 @@ namespace copydevops.client
     {
         public void SetPersonalAccessToken(string personalaccesstoken);
         public Task<string> GetResponseFromUri(string _requestUri);
-        public string getResponse();
     }
 }

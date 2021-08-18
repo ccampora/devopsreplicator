@@ -9,8 +9,6 @@ namespace copydevops.client
     {
         HttpClient _DevopsClient = null;
         
-        private string response = ""; 
-
         public Client()
         {
             this._DevopsClient = new HttpClient();
@@ -49,10 +47,6 @@ namespace copydevops.client
         /// <returns></returns>
         public async Task<string> GetResponseFromUri(string requestUri)
         {
-            if (requestUri == null || requestUri.Length == 0)
-            {
-                this.response = "";
-            }
             string responseBody = null;
 
             using (HttpResponseMessage response = await this._DevopsClient.GetAsync(requestUri))
@@ -60,14 +54,8 @@ namespace copydevops.client
                 response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadAsStringAsync();
             }
-            this.response = responseBody;
 
             return responseBody;
-        }
-
-        public string getResponse()
-        {
-            return this.response;
         }
     }
 }
