@@ -9,7 +9,7 @@ namespace copydevops.client
     {
         HttpClient _DevopsClient = null;
         
-        public Client()
+        public void Connect()
         {
             this._DevopsClient = new HttpClient();
 
@@ -18,7 +18,6 @@ namespace copydevops.client
                 System.Text.ASCIIEncoding.ASCII.GetBytes(
                     string.Format("{0}:{1}", "", GetPersonalAccessToken()))));
         }
-
 
         private string _PersonalAccessToken = "";
 
