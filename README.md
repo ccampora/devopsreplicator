@@ -15,6 +15,7 @@ Usage example:
             {
                 Client client = new Client(); 
                 client.SetPersonalAccessToken("your devops access token");
+                client.Connect();
 
                 QueryBuilder q = new QueryBuilder();
                 q.SetQueryParams(QueryParams.organization, "organization name");
