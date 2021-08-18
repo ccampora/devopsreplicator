@@ -16,6 +16,8 @@ Usage example:
                 Client client = new Client(); 
                 client.SetPersonalAccessToken("your devops access token");
                 client.Connect();
+                
+                Repository<LocalStorageDriver> localrepo = new Repository<LocalStorageDriver>();
 
                 // Example 1: Get workitem ID 2
                 QueryBuilder q = new QueryBuilder();
@@ -32,7 +34,6 @@ Usage example:
                 f.SetFileName("2.txt");
                 f.SetFileContent(result);
 
-                Repository<LocalStorageDriver> localrepo = new Repository<LocalStorageDriver>();
                 localrepo.CreateFile(@"C:\Tmp\", f); // this will save a file name 2.txt en C:\Tmp folder with the content of the workitem. 
             
                 // Example 2: Create a new query and retrieve all workitems
