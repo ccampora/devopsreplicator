@@ -1,0 +1,1 @@
+https://dev.azure.com/{organization}/_apis[/{area}]/{resource}?api-version={version}
