@@ -36,3 +36,5 @@ Usage example:
         }
     }
 
+run using `dotnet run`
+
