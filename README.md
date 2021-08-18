@@ -17,11 +17,12 @@ Usage example:
                 client.SetPersonalAccessToken("your devops access token");
                 client.Connect();
 
+                // Example 1: Get workitem ID 2
                 QueryBuilder q = new QueryBuilder();
-                q.SetQueryParams(QueryParams.organization, "organization name");
-                q.SetQueryParams(QueryParams.project, "project name");
+                q.SetQueryParams(QueryParams.organization, "your organization");
+                q.SetQueryParams(QueryParams.project, "your project");
                 q.SetQueryParams(QueryParams.area, "wit/workitems");
-                q.SetQueryParams(QueryParams.resource, "2"); // workitem id
+                q.SetQueryParams(QueryParams.resource, "workitem id");
                 q.SetQueryParams(QueryParams.apiversion, "api-version=6.1-preview.3");
 
                 string uri = q.getQueryAsURI();
@@ -33,9 +34,27 @@ Usage example:
 
                 Repository<LocalStorageDriver> localrepo = new Repository<LocalStorageDriver>();
                 localrepo.CreateFile(@"C:\Tmp\", f); // this will save a file name 2.txt en C:\Tmp folder with the content of the workitem. 
+            
+                // Example 2: Create a new query and retrieve all workitems
+                QueryRequestBody body;
+                body.name = "All workitems";
+                body.wiql = "Select [System.Id], [System.Title], [System.State] From WorkItems";
+
+
+                q.SetQueryParams(QueryParams.area, "wit/queries");
+                q.SetQueryParams(QueryParams.resource, "Shared Queries");
+                q.SetQueryParams(QueryParams.apiversion, "api-version=6.0");
+                q.SetQueryParams(QueryParams.requestbody, body);
+
+                uri = q.getQueryAsURI();
+                result = client.GetResponseFromQuery(q).Result;
+
+                f = new File();
+                f.SetFileName("3.txt");
+                f.SetFileContent(result);
+                localrepo.CreateFile(@"C:\Tmp\", f);
             }
         }
     }
 
 run using `dotnet run`
-
