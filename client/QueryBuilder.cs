@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 
 namespace copydevops.client
 {
@@ -7,7 +8,8 @@ namespace copydevops.client
         project,
         area,
         resource,
-        apiversion
+        apiversion,
+        requestbody
     }
 
 
@@ -19,6 +21,7 @@ namespace copydevops.client
         private string resource;
 
         private string apiversion;
+        private QueryRequestBody requestbody;
 
         public QueryBuilder(
             string organization,
@@ -34,8 +37,13 @@ namespace copydevops.client
             this.apiversion = apiversion;
         }
 
-        public QueryBuilder() {}
+        public QueryBuilder() { }
 
+        /// <summary>
+        /// Set Query params
+        /// </summary>
+        /// <param name="queryParams"></param>
+        /// <param name="value"></param>
         public void SetQueryParams(QueryParams queryParams, string value)
         {
             switch (queryParams)
@@ -59,6 +67,25 @@ namespace copydevops.client
             }
         }
 
+        /// <summary>
+        /// Set Query params
+        /// </summary>
+        /// <param name="queryParams"></param>
+        /// <param name="value"></param>
+        public void SetQueryParams(QueryParams queryParams, QueryRequestBody value)
+        {
+            switch (queryParams)
+            {
+                case QueryParams.requestbody:
+                    this.requestbody = value;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Return the URI of the query
+        /// </summary>
+        /// <returns>Query URI</returns>
         public string getQueryAsURI()
         {
             URIFactory urf = new URIFactory();
@@ -72,6 +99,11 @@ namespace copydevops.client
             }
         }
 
+        /// <summary>
+        /// True if the parameter is Set
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>True if the parameter is Set</returns>
         private bool isParamSet(QueryParams param)
         {
             switch (param)
@@ -89,6 +121,13 @@ namespace copydevops.client
             }
         }
 
+        /// <summary>
+        /// Get a Json representation 
+        /// </summary>
+        /// <returns>Body as JSON</returns>
+        public string GetQueryRequestBody()
+        {
+            return JsonConvert.SerializeObject(requestbody);
+        }
     }
 }
-

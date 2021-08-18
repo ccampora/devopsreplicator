@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace copydevops.client
 {
@@ -51,6 +52,28 @@ namespace copydevops.client
             using (HttpResponseMessage response = await this._DevopsClient.GetAsync(requestUri))
             {
                 response.EnsureSuccessStatusCode();
+                responseBody = await response.Content.ReadAsStringAsync();
+            }
+
+            return responseBody;
+        }
+        /// <summary>
+        /// Gets the specified query
+        /// </summary>
+        /// <param name="requestUri">The full URI to call</param>
+        /// <returns></returns>
+        public async Task<string> GetResponseFromQuery(QueryBuilder query)
+        {
+            string responseBody = null;
+
+            var data = new StringContent(query.GetQueryRequestBody(), Encoding.UTF8, "application/json");
+
+            // using (HttpResponseMessage response = 
+            //     await this._DevopsClient.PostAsync(query.getQueryAsURI(), data))
+            using (HttpResponseMessage response = 
+                await this._DevopsClient.PostAsync(query.getQueryAsURI(), data))
+            {
+                //response.EnsureSuccessStatusCode();
                 responseBody = await response.Content.ReadAsStringAsync();
             }
 
